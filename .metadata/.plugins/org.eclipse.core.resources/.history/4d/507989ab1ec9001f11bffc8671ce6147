@@ -1,0 +1,113 @@
+package Test;
+
+import java.io.IOException;
+import org.testng.Assert;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+import Pages.BilletteriePage;
+import Pages.DashboardPage;
+import Pages.loginPage;
+import Utils.BaseTest;
+import Utils.ConfigManager;
+
+@Listeners(Utils.TestListener.class)
+public class Connex_valide_invalide extends BaseTest {
+
+	private DashboardPage DPage;
+	private BilletteriePage Bpage;
+	private loginPage login;
+
+	@Test
+	public void ValidloginTest() throws IOException, InterruptedException {
+		test = extent.createTest("Valide Login Test", "Vérification de la connexion avec un utilisateur valide.");
+		try {
+			driver.get(ConfigManager.getProperty("baseUrl1"));
+			test.info("Navigué vers l'URL de base : " + ConfigManager.getProperty("baseUrl1"));
+
+			DPage = new DashboardPage(driver);
+			boolean result = DPage.setupdashbord();
+
+			if (result) {
+				test.pass("Configuration de la Page de Connexion réussie.");
+			} else {
+				test.fail("Échec de la configuration de la page de connexion.");
+				Assert.fail("Échec de la configuration de la page de connexion.");
+			}
+
+			login = new loginPage(driver);
+
+			String xmlFilePath = "C:/Users/Ben Ali Nader/Desktop/Cucumber-Selenium-Java/JeuxOlympiques/src/test/resources/credentials.xml";
+
+			login.ConnexionValide(xmlFilePath);
+			test.pass("Connexion réussie avec un utilisateur valide.");
+
+			login.scrollPage();
+			test.pass("défilement fluide et ralenti sur toute la page a été implémenté avec succès.");
+		} catch (Exception e) {
+			test.fail("Erreur dans le test de la page de connexion : " + e.getMessage());
+			throw e;
+		}
+	}
+
+	@Test
+	public void InvalidloginTest() throws IOException, InterruptedException {
+		test = extent.createTest("Valide Login Test", "Vérification de la connexion avec un utilisateur valide.");
+		try {
+			driver.get(ConfigManager.getProperty("baseUrl1"));
+			test.info("Navigué vers l'URL de base : " + ConfigManager.getProperty("baseUrl1"));
+
+			DPage = new DashboardPage(driver);
+			boolean result = DPage.setupdashbord();
+
+			if (result) {
+				test.pass("Configuration de la Page de Connexion réussie.");
+			} else {
+				test.fail("Échec de la configuration de la page de connexion.");
+				Assert.fail("Échec de la configuration de la page de connexion.");
+			}
+
+			login = new loginPage(driver);
+
+			String xmlFilePath = "C:/Users/Ben Ali Nader/Desktop/Cucumber-Selenium-Java/JeuxOlympiques/src/test/resources/credentials.xml";
+
+			login.ConnexionInvalide(xmlFilePath);
+			test.fail("Connexion impossible");
+
+			
+		} catch (Exception e) {
+			test.fail("Erreur dans le test de la page de connexion : " + e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Test
+	public void MotDePasseOublié() throws IOException, InterruptedException {
+		test = extent.createTest("MotDePasseOublié Test", "Vérification de la Fonctionalité du MotDePasseOublié");
+		try {
+			driver.get(ConfigManager.getProperty("baseUrl1"));
+			test.info("Navigué vers l'URL de base : " + ConfigManager.getProperty("baseUrl1"));
+
+			DPage = new DashboardPage(driver);
+			boolean result = DPage.setupdashbord();
+
+			if (result) {
+				test.pass("Configuration de la Page de Connexion réussie.");
+			} else {
+				test.fail("Échec de la configuration de la page de connexion.");
+				Assert.fail("Échec de la configuration de la page de connexion.");
+			}
+
+			login = new loginPage(driver);
+
+			String xmlFilePath = "C:/Users/Ben Ali Nader/Desktop/Cucumber-Selenium-Java/JeuxOlympiques/src/test/resources/credentials.xml";
+
+			login.pwdOublié(xmlFilePath);
+			test.pass("Un e-mail avec un lien pour réinitialiser votre mot de passe a été envoyé à votre adresse e-mail.");
+
+			
+		} catch (Exception e) {
+			test.fail("Erreur dans le test de la page de connexion : " + e.getMessage());
+			throw e;
+		}
+	}
+}

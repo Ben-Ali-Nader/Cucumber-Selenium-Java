@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="3" time="37.873">
+    <testcase classname="Test functionality authentication" name="Sign up with email address" time="17.432">
+        <system-out><![CDATA[Given user clicks on the Sign Up button.....................................passed
+When user enters email......................................................passed
+And user clicks create account..............................................passed
+Then user receives the registration form....................................passed
+And user fills out the form:................................................passed
+And user click sur button Register..........................................passed
+Then user is navigated to the dashboard.....................................passed
+]]></system-out>
+    </testcase>
+    <testcase classname="Authentification utilisateur" name="Authentification réussie avec des identifiants valides" time="9.635">
+        <system-out><![CDATA[Given user est sur la page de connexion.....................................passed
+When user entre un email valide nadbenali.it@gmail.com......................passed
+And user entre un mot de passe valide nader123..............................passed
+And user clique sur le bouton Sign In.......................................passed
+Then user est redirigé vers la page daccueil de son compte..................passed
+]]></system-out>
+    </testcase>
+    <testcase classname="Test functionality of the My Shop website" name="Check the home page" time="10.557">
+        <system-out><![CDATA[Given the browser is open...................................................passed
+And the user is on the Google search page...................................passed
+When the user enters automationpractice in the search box...................passed
+And clicks enter............................................................passed
+Then the user is navigated to the search results page.......................passed
+And the user scrolls to the My Shop site and clicks enter...................passed
+Then the user is navigated to the home page.................................passed
+]]></system-out>
+    </testcase>
+</testsuite>

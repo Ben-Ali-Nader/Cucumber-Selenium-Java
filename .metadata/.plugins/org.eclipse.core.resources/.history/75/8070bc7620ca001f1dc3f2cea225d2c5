@@ -1,0 +1,135 @@
+package Pages;
+
+import java.io.IOException;
+import java.time.Duration;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+
+import Utils.BaseTest;
+
+public class JOly_Paris2024_Page {
+
+    private WebDriver driver;
+    private WebDriverWait wait;
+    JavascriptExecutor js;
+
+    @FindBy(id="menu-olympic-games")
+    WebElement MenuOlympicGames;
+
+    @FindBy(id="9f3163c0-1954-42a3-baec-48b3726ac7eb")
+    WebElement paris2024;
+
+    @FindBy(xpath="//*[@data-cy=\"topbar-button\" and contains(text(),'Médailles')]")
+    WebElement medailles;
+
+    @FindBy(id="p2024-languageButton-header")
+    WebElement langue;
+
+    @FindBy(xpath="//*[@data-cy=\"topbar-button\" and contains(text(),'Meilleurs moments')]")
+    WebElement MeilleursMoments;
+
+    @FindBy(id="p2024-user-header")
+    WebElement userConnex;
+
+    @FindBy(xpath="//*[@class=\"sc-1a26b28d-0 WGBJo text--title\" and contains (text(),'Tableau des médailles')]")
+    WebElement Tableaudesmédailles;
+
+    // Constructeur de la classe
+    public JOly_Paris2024_Page(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this); // Initialisation des éléments de la page
+    }
+
+    // Fonction pour vérifier la visibilité des éléments
+    public void verifyElementVisibility(WebElement element, String elementName) throws IOException {
+        try {
+            if (element.isDisplayed()) {
+                BaseTest.test.pass("Le Message '" + elementName + "' est visible."); // Rapport de test passé si l'élément est visible
+            } else {
+                BaseTest.test.fail("Le Message'" + elementName + "' n'est pas visible."); // Rapport de test échoué si l'élément n'est pas visible
+            }
+        } catch (Exception e) {
+            BaseTest.test.fail("Erreur lors de la vérification de l'élément '" + elementName + "'.",
+                    MediaEntityBuilder.createScreenCaptureFromPath(BaseTest.takeScreenshot(elementName + "_visibility_error")).build()); // Capture d'écran en cas d'erreur
+        }
+    }
+
+    // Fonction pour attendre le chargement complet de la page
+    public void waitForPageToLoad() {
+        wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // Temps d'attente de 30 secondes
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        wait.until(webDriver -> js.executeScript("return document.readyState").toString().equals("complete")); // Attente que la page soit complètement chargée
+    }
+
+    // Fonction pour vérifier et cliquer sur le bouton Paris 2024
+    public void paris24page() throws IOException {
+        try {
+            // Vérification de la visibilité du bouton Paris 2024
+            verifyElementVisibility(paris2024, "Le bouton Paris 2024 est visible et prêt à être cliqué.");
+            
+            if (paris2024.isDisplayed()) {
+                paris2024.click(); // Clique sur le bouton Paris 2024 si visible
+                BaseTest.test.pass("Le bouton Paris 2024 a été cliqué avec succès."); // Rapport de test passé
+
+                // Vérification de la visibilité des autres éléments de la page
+                verifyElementVisibility(medailles, "Le bouton Médailles est visible et prêt à être cliqué.");
+                verifyElementVisibility(langue, "Le bouton Langue est visible et prêt à être cliqué.");
+                verifyElementVisibility(MeilleursMoments, "Le bouton Meilleurs Moments est visible et prêt à être cliqué.");
+                verifyElementVisibility(userConnex, "Le bouton Connexion utilisateur est visible et prêt à être cliqué.");
+            } else {
+                BaseTest.test.fail("Le bouton Paris 2024 n'est pas affiché sur la page."); // Rapport de test échoué si le bouton n'est pas visible
+            }
+        } catch (Exception e) {
+            // Gestion des erreurs et capture d'écran
+            BaseTest.test.fail("Erreur lors de la vérification des éléments : " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // Fonction de défilement de la page vers le bas puis vers le haut
+    public void scrollPage() throws InterruptedException {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        // Défilement vers le bas de la page
+        long pageHeight = (long) js.executeScript("return document.body.scrollHeight"); // Obtient la hauteur totale de la page
+        for (int i = 0; i < pageHeight; i += 100) {
+            js.executeScript("window.scrollBy(0, 100);"); // Défile de 100 pixels à chaque itération
+            Thread.sleep(50); // Pause de 50 ms entre chaque défilement
+        }
+
+        Thread.sleep(1000); // Pause après avoir atteint le bas de la page
+
+        // Défilement vers le haut de la page
+        for (int i = (int) pageHeight; i > 0; i -= 100) {
+            js.executeScript("window.scrollBy(0, -100);"); // Défile de -100 pixels à chaque itération
+            Thread.sleep(50); // Pause de 50 ms entre chaque défilement
+        }
+
+        Thread.sleep(1000); // Pause après avoir atteint le haut de la page
+    }
+
+    // Fonction pour naviguer vers la section des Médailles
+    public void medaillesparis2024() throws InterruptedException, IOException {
+        waitForPageToLoad(); // Attendre que la page soit complètement chargée
+        medailles.click(); // Clique sur le bouton Médailles
+        wait.until(ExpectedConditions.visibilityOf(Tableaudesmédailles));
+        if(Tableaudesmédailles.isDisplayed()) {
+        verifyElementVisibility(Tableaudesmédailles,"Le tableau des médailles est visible correctement."); // Vérification de la visibilité du tableau des médailles
+        scrollPage(); // Scroll de la page pour vérifier le contenu
+        
+        }else
+        	System.out.println("le titre Tableau des médailles n'est pas affichés ");
+        Thread.sleep(3000); // Pause après l'action
+    }
+
+}

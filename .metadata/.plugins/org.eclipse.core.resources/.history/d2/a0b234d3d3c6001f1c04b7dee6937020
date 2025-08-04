@@ -1,0 +1,32 @@
+package Test;
+
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+
+import Pages.DashboardPage;
+import Utils.BaseTest;
+
+@Listeners(Utils.TestListener.class)
+public class JOlympiquesParis2024 extends BaseTest{
+	
+	DashboardPage DPage ;
+	
+	
+	
+	
+	@Test
+	public void dashboardTest() {
+		
+	    DPage = new DashboardPage(driver);
+	    
+	    boolean result = DPage.setupdashbord();
+	    if (result) {
+	        test.pass("Configuration du tableau de bord réussie.");
+	    } else {
+	        test.fail("Échec de la configuration du tableau de bord.");
+	    }
+	    
+	    
+	}
+
+}

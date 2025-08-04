@@ -1,0 +1,239 @@
+package Pages;
+
+import java.io.IOException;
+import java.time.Duration;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+
+import Utils.BaseTest;
+
+public class loginPage {
+
+	private WebDriver driver;
+	private WebDriverWait wait;
+	JavascriptExecutor js;
+
+
+	@FindBy(xpath="//*[@class=\"OcsTextstyles__StyledText-sc-1a1i41u-0 kNulKN UserProfileButton-styles__UserProfileButtonLabel-sc-ad362435-0 iLtJqY user-profile-label text--sm-text\"]")
+	WebElement btn_SeConnecter ;
+
+	@FindBy(xpath="//*[@title=\"facebook\"]")
+	WebElement log_facebook;
+
+	@FindBy(xpath="//*[@title=\"apple\"]")
+	WebElement log_apple;
+
+	@FindBy(xpath="//*[@title=\"google\"]")
+	WebElement log_google;
+
+	@FindBy(id="email")
+	WebElement champ_email;
+
+	@FindBy(id="password")
+	WebElement champ_pwd;
+
+	@FindBy(xpath="//*[@type=\"submit\"]")
+	WebElement submit;
+
+	@FindBy(xpath="//*[@data-testid=\"forgot-password\"] ")
+	WebElement MotDePassoubliee;
+
+	@FindBy(xpath="//*[@class=\"OcsText-styles__StyledText-sc-bf256156-0 fPptRw title text--l-subtitle\" and contains (text(),'Connectez-vous à votre Olympic ID')]")
+	WebElement Mes_inscription;
+
+	@FindBy(xpath="//*[@class=\"sc-hKFymg TLuiI\"]")
+	WebElement email_pwd_invalide ;
+	
+	@FindBy(xpath="//*[@type=\"submit\" and contains(text(),'Réinitialiser le mot de passe')] ")
+	WebElement btn_Réinitialiser;
+	
+	@FindBy(xpath="//*[@class=\"OcsText-styles__StyledText-sc-bf256156-0 OOqJW body text--body\"]")
+	WebElement mess_pwd_réinitialiser;
+	
+	
+	public loginPage(WebDriver driver) {
+		this.driver = driver;
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+	}
+
+	public void SeConnecter() {
+		if (btn_SeConnecter.isDisplayed()) {
+			btn_SeConnecter.click();
+			System.out.println("vous ete rediger ves la page de conenxion ");
+		}
+	}
+
+	public void verifyElementVisibility(WebElement element, String elementName) throws IOException {
+		try {
+			if (element.isDisplayed()) {
+				BaseTest.test.pass("Le Message '" + elementName + "' est visible.");
+			} else {
+				BaseTest.test.fail("Le Message'" + elementName + "' n'est pas visible.");
+			}
+		} catch (Exception e) {
+			BaseTest.test.fail("Erreur lors de la vérification de l'élément '" + elementName + "'.",
+					MediaEntityBuilder.createScreenCaptureFromPath(BaseTest.takeScreenshot(elementName + "_visibility_error")).build());
+		}
+	}
+
+	public void verifyElement () throws IOException {
+
+		verifyElementVisibility(log_google, "google");
+		verifyElementVisibility(log_facebook, "facebook");
+		verifyElementVisibility(log_apple, "apple");
+		verifyElementVisibility(champ_email, "champ email");
+		verifyElementVisibility(submit, "submit");
+		//verifyElementVisibility(MotDePassoublié, "Mot de passe oublié ?");
+	}
+
+	public void ConnexionValide(String xmlFilePath) throws InterruptedException, IOException {
+		
+		// Lire l'email depuis le fichier XML
+		String email = Utils.CredentialsLoader.getEmailFromXml(xmlFilePath);
+		if (email == null || email.isEmpty()) {
+			throw new IOException("Impossible de récupérer l'email depuis le fichier XML.");
+		}
+
+		// Faire défiler jusqu'au champ email
+		js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", champ_email);
+
+		// Remplir le champ email
+		champ_email.sendKeys(email);
+		Thread.sleep(1000);
+		submit.click();
+		
+		
+		verifyElementVisibility(Mes_inscription, "Connectez-vous à votre Olympic ID");
+		
+		
+		String pwd = Utils.CredentialsLoader.getpwdFromXml(xmlFilePath);
+		if (pwd == null || pwd.isEmpty()) {
+			throw new IOException("Impossible de récupérer le mot de passe  depuis le fichier XML.");
+		}
+
+		js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", champ_pwd);
+
+		champ_pwd.sendKeys(pwd);
+		submit.click();
+
+		
+		// Attendre et vérifier la visibilité de l'élément
+		Thread.sleep(5000);
+		
+	}
+	
+	
+	
+	public void scrollPage() throws InterruptedException {
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
+
+	    // Scroller vers le bas de la page progressivement
+	    long pageHeight = (long) js.executeScript("return document.body.scrollHeight");
+	    for (int i = 0; i < pageHeight; i += 100) {
+	        js.executeScript("window.scrollBy(0, 100);"); // Scroller de 100 pixels à chaque itération
+	        Thread.sleep(50); // Pause de 50 ms entre chaque étape
+	    }
+
+	    Thread.sleep(1000); // Pause après avoir atteint le bas
+
+	    // Scroller vers le haut de la page progressivement
+	    for (int i = (int) pageHeight; i > 0; i -= 100) {
+	        js.executeScript("window.scrollBy(0, -100);"); // Scroller de -100 pixels à chaque itération
+	        Thread.sleep(50); // Pause de 50 ms entre chaque étape
+	    }
+
+	    Thread.sleep(1000); // Pause après avoir atteint le haut
+	}
+	
+	;
+public void ConnexionInvalide(String xmlFilePath) throws InterruptedException, IOException {
+		
+		String email = Utils.CredentialsLoader.getEmailFromXml(xmlFilePath);
+		if (email == null || email.isEmpty()) {
+			throw new IOException("Impossible de récupérer l'email depuis le fichier XML.");
+		}
+
+		js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", champ_email);
+
+		champ_email.sendKeys(email);
+		submit.click();
+		
+		verifyElementVisibility(Mes_inscription, "Connectez-vous à votre Olympic ID");
+		
+		String pwd1 = Utils.CredentialsLoader.getpwd1FromXml(xmlFilePath);
+		if (pwd1 == null || pwd1.isEmpty()) {
+			throw new IOException("Impossible de récupérer le mot de passe  depuis le fichier XML.");
+		}
+
+		js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", champ_pwd);
+
+		champ_pwd.sendKeys(pwd1);
+		submit.click();
+
+		verifyElementVisibility(email_pwd_invalide, "password-error");
+		
+		Thread.sleep(5000);
+		
+	}
+public void pwdOublié(String xmlFilePath) throws InterruptedException, IOException {
+	js = (JavascriptExecutor) driver;
+	js.executeScript("arguments[0].scrollIntoView({ behavior: 'smooth', block: 'center' });", MotDePassoubliee);
+
+	MotDePassoubliee.click();
+	Thread.sleep(3000);
+	String email = Utils.CredentialsLoader.getEmailFromXml(xmlFilePath);
+	if (email == null || email.isEmpty()) {
+		throw new IOException("Impossible de récupérer l'email depuis le fichier XML.");
+	}
+
+	
+	champ_email.sendKeys(email);
+	Thread.sleep(2000);
+	
+	btn_Réinitialiser.click();
+	
+	verifyElementVisibility(mess_pwd_réinitialiser, "	Un e-mail avec un lien pour réinitialiser votre mot de passe a été envoyé à votre adresse e-mail.\r\n"
+			+ "");
+	
+	Thread.sleep(5000);
+	
+}
+
+
+/*
+ * 
+
+	public void EnterPageParisOlympic24() throws IOException, InterruptedException {
+
+
+
+		wait.until(ExpectedConditions.visibilityOf(paris2024));
+
+		// Vérification que l'élément est bien visible avant de cliquer
+		if (paris2024.isDisplayed()) {
+			System.out.println("Le bouton Paris 2024 est visible");
+			paris2024.click();  // Cliquer sur le bouton Paris 2024
+		} else {
+			System.out.println("Le bouton Paris 2024 n'est pas visible");
+		}
+	}
+ * 
+ * */
+ */
+
+
+}

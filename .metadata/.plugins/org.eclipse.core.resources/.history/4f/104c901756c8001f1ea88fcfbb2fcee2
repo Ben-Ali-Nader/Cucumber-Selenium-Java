@@ -1,0 +1,18 @@
+# URL de base
+baseUrl=https://olympics.com/fr/
+
+
+# Navigateur
+browser=chrome
+
+# Timeout en secondes
+implicitWait=10
+pageLoadTimeout=20
+
+# Identifiants
+username=nadbenali.it@gmail.com
+password=23666444nN!
+
+username1=nadbenaliit@gmail.com
+password1=123456789n
+

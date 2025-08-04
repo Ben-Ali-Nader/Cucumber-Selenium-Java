@@ -1,0 +1,100 @@
+package Test;
+
+import java.io.IOException;
+import org.testng.Assert;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+import Pages.BilletteriePage;
+import Pages.DashboardPage;
+import Pages.loginPage;
+import Utils.BaseTest;
+import Utils.ConfigManager;
+
+@Listeners(Utils.TestListener.class)
+public class JOlympiques extends BaseTest {
+
+    private DashboardPage DPage;
+    private BilletteriePage Bpage;
+    private loginPage login;
+
+ 
+    @Test
+    public void dashboardTest() throws IOException {
+        test = extent.createTest("Dashboard Test", "Vérification de la fonctionnalité du tableau de bord.");
+        try {
+            driver.get(ConfigManager.getProperty("baseUrl"));
+            test.info("Navigué vers l'URL de base : " + ConfigManager.getProperty("baseUrl"));
+
+            DPage = new DashboardPage(driver);
+            boolean result = DPage.setupdashbord();
+            if (result) {
+                test.pass("Configuration du tableau de bord réussie.");
+            } else {
+                test.fail("Échec de la configuration du tableau de bord.");
+                Assert.fail("Échec de la configuration du tableau de bord.");
+            }
+
+            DPage.verifyElement();
+            test.pass("Les éléments du tableau de bord ont été vérifiés avec succès.");
+        } catch (Exception e) {
+            test.fail("Erreur dans le test du tableau de bord : " + e.getMessage());
+            throw e;
+        }
+    }
+
+   
+    @Test
+    public void billetterieTest() throws IOException {
+        test = extent.createTest("Billetterie Test", "Vérification des fonctionnalités de la page Billetterie.");
+        try {
+            driver.get(ConfigManager.getProperty("baseUrl"));
+            test.info("Navigué vers l'URL de base : " + ConfigManager.getProperty("baseUrl"));
+
+            Bpage = new BilletteriePage(driver);
+
+            Bpage.setupDashboardBilletterie();
+            test.pass("La billetterie a été initialisée avec succès.");
+
+            Bpage.enterBilletteriePage();
+            test.pass("Entrée dans la page Billetterie réussie.");
+
+            Bpage.ImportantOfEventsBilleterie();
+            test.pass("Informations importantes de la billetterie récupérées avec succès.");
+        } catch (Exception e) {
+            test.fail("Erreur dans le test de la billetterie : " + e.getMessage());
+            throw e;
+        }
+    }
+
+   
+    @Test
+    public void loginTest() throws IOException, InterruptedException {
+        test = extent.createTest("Login Test", "Vérification des fonctionnalités de la page Login.");
+        try {
+            driver.get(ConfigManager.getProperty("baseUrl1"));
+            test.info("Navigué vers l'URL de base : " + ConfigManager.getProperty("baseUrl1"));
+
+            DPage = new DashboardPage(driver);
+            boolean result = DPage.setupdashbord();
+            if (result) {
+                test.pass("Configuration du la Page de Conenxion Configurer avec succes");
+            } else {
+                test.fail("Échec de la configuration du tableau de bord.");
+                Assert.fail("Échec de la configuration du tableau de bord.");
+            }
+
+            login = new loginPage(driver);
+
+            login.verifyElement();
+            test.pass("Éléments de la page de connexion vérifiés avec succès.");
+            Thread.sleep(2000);
+        } catch (Exception e) {
+            test.fail("Erreur dans le test de la page de connexion : " + e.getMessage());
+            throw e;
+        }
+    }
+    
+   
+    
+    
+}

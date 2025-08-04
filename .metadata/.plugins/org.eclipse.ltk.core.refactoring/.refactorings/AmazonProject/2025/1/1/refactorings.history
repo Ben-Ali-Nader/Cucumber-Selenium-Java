@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;credentials.xml&apos; to &apos;JeuxOlympiques/src/test/java/Utils&apos;&#x0D;&#x0A;- Original project: &apos;AmazonProject&apos;&#x0D;&#x0A;- Destination element: &apos;JeuxOlympiques/src/test/java/Utils&apos;&#x0D;&#x0A;- Original element: &apos;credentials.xml&apos;" description="Copy file" destination="=JeuxOlympiques/src\/test\/java=/optional=/true=/=/maven.pomderived=/true=/=/test=/true=/&lt;Utils" element1="src/main/resources/credentials.xml" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1735827158060" units="0" version="1.0"/>
+</session>

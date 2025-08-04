@@ -1,0 +1,345 @@
+[
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2024-12-14T16:11:28.107Z",
+        "line": 17,
+        "name": "Sign up with email address",
+        "description": "",
+        "id": "test-functionality-authentication;sign-up-with-email-address;;2",
+        "type": "scenario",
+        "keyword": "Scenario Outline",
+        "steps": [
+          {
+            "result": {
+              "duration": 6368658200,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user clicks on the Sign Up button",
+            "match": {
+              "location": "StepsDefenitions.MyShopAuthentificationSteps_PF.user_clicks_on_the_Sign_Up_button()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 113148300,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "user enters email",
+            "match": {
+              "location": "StepsDefenitions.MyShopAuthentificationSteps_PF.user_enters_nadbenali_it_gmail_com()"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 96493000,
+              "status": "passed"
+            },
+            "line": 7,
+            "name": "user clicks create account",
+            "match": {
+              "location": "StepsDefenitions.MyShopAuthentificationSteps_PF.user_click_create_acount()"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 30492600,
+              "status": "passed"
+            },
+            "line": 8,
+            "name": "user receives the registration form",
+            "match": {
+              "location": "StepsDefenitions.MyShopAuthentificationSteps_PF.user_receivera_la_formulaire_inscription()"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 1431764800,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "user fills out the form:",
+            "match": {
+              "location": "StepsDefenitions.MyShopAuthentificationSteps_PF.user_fills_out_the_form(io.cucumber.datatable.DataTable)"
+            },
+            "rows": [
+              {
+                "cells": [
+                  "First Name",
+                  "Last Name",
+                  "Password"
+                ]
+              },
+              {
+                "cells": [
+                  "Nader",
+                  "Ben Ali",
+                  "nader123"
+                ]
+              }
+            ],
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 5854472500,
+              "status": "passed"
+            },
+            "line": 12,
+            "name": "user click sur button Register",
+            "match": {
+              "location": "StepsDefenitions.MyShopAuthentificationSteps_PF.user_click_sur_button_Register()"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 3453989800,
+              "status": "passed"
+            },
+            "line": 13,
+            "name": "user is navigated to the dashboard",
+            "match": {
+              "location": "StepsDefenitions.MyShopAuthentificationSteps_PF.user_is_navigated_to_dashbord()"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@Step2"
+          }
+        ]
+      }
+    ],
+    "name": "Test functionality authentication",
+    "description": "",
+    "id": "test-functionality-authentication",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/Authentification.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2024-12-14T16:11:45.553Z",
+        "line": 13,
+        "name": "Authentification réussie avec des identifiants valides",
+        "description": "",
+        "id": "authentification-utilisateur;authentification-réussie-avec-des-identifiants-valides;;2",
+        "type": "scenario",
+        "keyword": "Scenario Outline",
+        "steps": [
+          {
+            "result": {
+              "duration": 4078020300,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "user est sur la page de connexion",
+            "match": {
+              "location": "StepsDefenitions.LoginMyshop_PF.user_est_sur_la_page_de_connexion()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 115406700,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "user entre un email valide nadbenali.it@gmail.com",
+            "match": {
+              "arguments": [
+                {
+                  "val": "nadbenali.it@gmail.com",
+                  "offset": 27
+                }
+              ],
+              "location": "StepsDefenitions.LoginMyshop_PF.user_entre_un_email_valide(java.lang.String)"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 94733100,
+              "status": "passed"
+            },
+            "line": 7,
+            "name": "user entre un mot de passe valide nader123",
+            "match": {
+              "arguments": [
+                {
+                  "val": "nader123",
+                  "offset": 34
+                }
+              ],
+              "location": "StepsDefenitions.LoginMyshop_PF.user_entre_un_mot_de_passe_valide(java.lang.String)"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 447065800,
+              "status": "passed"
+            },
+            "line": 8,
+            "name": "user clique sur le bouton Sign In",
+            "match": {
+              "location": "StepsDefenitions.LoginMyshop_PF.user_clique_sur_le_bouton()"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 4887360800,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "user est redirigé vers la page daccueil de son compte",
+            "match": {
+              "location": "StepsDefenitions.LoginMyshop_PF.user_est_redirigé_vers_la_page_d_accueil_de_son_compte()"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@Step3"
+          }
+        ]
+      }
+    ],
+    "name": "Authentification utilisateur",
+    "description": "",
+    "id": "authentification-utilisateur",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/LoginMyshop.feature",
+    "tags": []
+  },
+  {
+    "line": 1,
+    "elements": [
+      {
+        "start_timestamp": "2024-12-14T16:11:55.200Z",
+        "line": 15,
+        "name": "Check the home page",
+        "description": "",
+        "id": "test-functionality-of-the-my-shop-website;check-the-home-page;;2",
+        "type": "scenario",
+        "keyword": "Scenario Outline",
+        "steps": [
+          {
+            "result": {
+              "duration": 4073760600,
+              "status": "passed"
+            },
+            "line": 5,
+            "name": "the browser is open",
+            "match": {
+              "location": "StepsDefenitions.MyShopHomePageSteps_PF.browser_is_open()"
+            },
+            "keyword": "Given "
+          },
+          {
+            "result": {
+              "duration": 34326200,
+              "status": "passed"
+            },
+            "line": 6,
+            "name": "the user is on the Google search page",
+            "match": {
+              "location": "StepsDefenitions.MyShopHomePageSteps_PF.user_is_in_google_searsh()"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 163811700,
+              "status": "passed"
+            },
+            "line": 7,
+            "name": "the user enters automationpractice in the search box",
+            "match": {
+              "arguments": [
+                {
+                  "val": "automationpractice",
+                  "offset": 16
+                }
+              ],
+              "location": "StepsDefenitions.MyShopHomePageSteps_PF.user_enter_a_text_ins_search_box(java.lang.String)"
+            },
+            "keyword": "When "
+          },
+          {
+            "result": {
+              "duration": 182075200,
+              "status": "passed"
+            },
+            "line": 8,
+            "name": "clicks enter",
+            "match": {
+              "location": "StepsDefenitions.MyShopHomePageSteps_PF.click_enter()"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 818844100,
+              "status": "passed"
+            },
+            "line": 9,
+            "name": "the user is navigated to the search results page",
+            "match": {
+              "location": "StepsDefenitions.MyShopHomePageSteps_PF.user_is_navigated_to_page_search()"
+            },
+            "keyword": "Then "
+          },
+          {
+            "result": {
+              "duration": 1806948000,
+              "status": "passed"
+            },
+            "line": 10,
+            "name": "the user scrolls to the My Shop site and clicks enter",
+            "match": {
+              "location": "StepsDefenitions.MyShopHomePageSteps_PF.user_scroll_vers_le_site_Myshop_and_click_enter()"
+            },
+            "keyword": "And "
+          },
+          {
+            "result": {
+              "duration": 3454397300,
+              "status": "passed"
+            },
+            "line": 11,
+            "name": "the user is navigated to the home page",
+            "match": {
+              "location": "StepsDefenitions.MyShopHomePageSteps_PF.user_is_navigated_to_home_page()"
+            },
+            "keyword": "Then "
+          }
+        ],
+        "tags": [
+          {
+            "name": "@Step1"
+          }
+        ]
+      }
+    ],
+    "name": "Test functionality of the My Shop website",
+    "description": "",
+    "id": "test-functionality-of-the-my-shop-website",
+    "keyword": "Feature",
+    "uri": "file:src/test/resources/features/MyShop.feature",
+    "tags": []
+  }
+]

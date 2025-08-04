@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2025-01-04T16:35:01 CET" name="Default suite" finished-at="2025-01-04T16:35:44 CET" duration-ms="42799">
+    <groups>
+    </groups>
+    <test started-at="2025-01-04T16:35:01 CET" name="Default test" finished-at="2025-01-04T16:35:44 CET" duration-ms="42799">
+      <class name="Test.JOlympiquesParis2024">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:Test.JOlympiquesParis2024@7188af83]" started-at="2025-01-04T16:35:01 CET" name="setUp" finished-at="2025-01-04T16:35:03 CET" duration-ms="1896" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="InfoMedaillesTunisieParis24()[pri:0, instance:Test.JOlympiquesParis2024@7188af83]" started-at="2025-01-04T16:35:03 CET" name="InfoMedaillesTunisieParis24" finished-at="2025-01-04T16:35:43 CET" duration-ms="40404" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- InfoMedaillesTunisieParis24 -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:Test.JOlympiquesParis2024@7188af83]" started-at="2025-01-04T16:35:43 CET" name="tearDown" finished-at="2025-01-04T16:35:44 CET" duration-ms="459" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- Test.JOlympiquesParis2024 -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

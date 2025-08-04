@@ -1,0 +1,20 @@
+package StepsDefenitions;
+
+import org.junit.runner.RunWith;
+
+import io.cucumber.junit.CucumberOptions;
+import io.cucumber.junit.Cucumber;
+
+@RunWith(Cucumber.class) 
+@CucumberOptions(features="src/test/resources/features",glue={"StepsDefenitions"},
+monochrome = true,
+tags = "@Step1 or @Step2 or @Step3",
+
+plugin = { "pretty",  "junit:target/reports/JunitReports/cucumber.xml",
+		"json:targetr/reports/JisonReports/cucumber.json",
+		"html:target/reports/HtmlReports"
+		})
+
+public class RunnerTest {
+
+}

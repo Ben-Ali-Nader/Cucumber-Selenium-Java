@@ -1,0 +1,58 @@
+package Test;
+
+import java.io.IOException;
+import org.testng.Assert;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+import Pages.BilletteriePage;
+import Pages.DashboardPage;
+import Pages.loginPage;
+import Utils.BaseTest;
+import Utils.ConfigManager;
+
+@Listeners(Utils.TestListener.class)
+public class Connex_valide_invalide extends BaseTest {
+
+    private DashboardPage DPage;
+    private BilletteriePage Bpage;
+    private loginPage login;
+
+    @Test
+    public void ValidloginTest() throws IOException, InterruptedException {
+        // Création d'un test ExtentReports avec un titre et une description
+        test = extent.createTest("Valide Login Test", "Vérification de la connexion avec un utilisateur valide.");
+        try {
+            // Naviguer vers l'URL de base définie dans le fichier de configuration
+            driver.get(ConfigManager.getProperty("baseUrl1"));
+            test.info("Navigué vers l'URL de base : " + ConfigManager.getProperty("baseUrl1"));
+
+            // Initialisation et configuration de la page du tableau de bord
+            DPage = new DashboardPage(driver);
+            boolean result = DPage.setupdashbord();
+
+            // Vérification du succès ou de l'échec de la configuration
+            if (result) {
+                test.pass("Configuration de la Page de Connexion réussie.");
+            } else {
+                test.fail("Échec de la configuration de la page de connexion.");
+                Assert.fail("Échec de la configuration de la page de connexion.");
+            }
+
+            // Initialisation de la page de connexion
+            login = new loginPage(driver);
+
+            // Chemin vers le fichier XML contenant les informations d'identification
+            String xmlFilePath = "C:/Users/Ben Ali Nader/Desktop/Cucumber-Selenium-Java/JeuxOlympiques/src/test/resources/credentials.xml";
+            
+            // Appel de la méthode pour exécuter un login valide avec les données du fichier XML
+            login.ConnexionValide(xmlFilePath);
+
+            // Enregistrement du succès dans le rapport ExtentReports
+            test.pass("Connexion réussie avec un utilisateur valide.");
+        } catch (Exception e) {
+            // Capture de l'exception en cas d'erreur et ajout au rapport
+            test.fail("Erreur dans le test de la page de connexion : " + e.getMessage());
+            throw e;
+        }
+    }
+}

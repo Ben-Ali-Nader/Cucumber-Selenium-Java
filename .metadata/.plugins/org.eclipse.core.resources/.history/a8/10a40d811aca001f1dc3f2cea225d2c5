@@ -1,0 +1,104 @@
+package Test;
+
+import java.io.IOException;
+
+import org.testng.Assert;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+
+import Pages.BilletteriePage;
+import Pages.JOly_Paris2024_Page;
+import Pages.JOlympiquesPage;
+import Pages.loginPage;
+import Utils.BaseTest;
+import Utils.ConfigManager;
+
+@Listeners(Utils.TestListener.class)
+
+public class JOlympiquesParis2024 extends BaseTest {
+	
+	private JOlympiquesPage DPage;
+	private BilletteriePage Bpage;
+	JOly_Paris2024_Page ParisOly;
+	private loginPage login;
+	
+/*@Test
+	public void ParisOlympique24() throws IOException, InterruptedException {
+	    // Initialisation du test dans le rapport
+	    test = extent.createTest(
+	        "ParisOlympique24 Page Test",
+	        "Vérification de la connexion avec un utilisateur valide et redirection vers la page Olympique Paris 2024"
+	    );
+
+	    try {
+	        // Navigation vers l'URL de base
+	        String baseUrl = ConfigManager.getProperty("baseUrl1");
+	        driver.get(baseUrl);
+	        test.info("Navigué vers l'URL de base : " + baseUrl);
+
+	        // Initialisation et configuration de la page des Jeux Olympiques
+	        DPage = new JOlympiquesPage(driver);
+	        boolean dashboardConfigured = DPage.setupdashbord();
+
+	        if (dashboardConfigured) {
+	            test.pass("Configuration de la page des Jeux Olympiques réussie.");
+	        } else {
+	            test.fail("Échec de la configuration de la page des Jeux Olympiques.");
+	            Assert.fail("Échec de la configuration de la page des Jeux Olympiques.");
+	        }
+
+	        // Connexion avec un utilisateur valide
+	        login = new loginPage(driver);
+	        String xmlFilePath = "C:/Users/Ben Ali Nader/Desktop/Cucumber-Selenium-Java/JeuxOlympiques/src/test/resources/credentials.xml";
+
+	        login.ConnexionValide(xmlFilePath);
+	        test.pass("Connexion réussie avec un utilisateur valide.");
+	        
+	        // Redirection vers la page Paris 2024
+	        ParisOly = new JOly_Paris2024_Page(driver);
+	        ParisOly.paris24page();
+	        test.pass("Navigation vers la page Paris 2024 réussie.");
+	        
+	    } catch (IOException e) {
+	        test.fail("Erreur d'Entrée/Sortie (IOException) lors du test : " + e.getMessage());
+	        throw e;
+	    } catch (InterruptedException e) {
+	        test.fail("Erreur d'interruption (InterruptedException) lors du test : " + e.getMessage());
+	        throw e;
+	    } catch (Exception e) {
+	        test.fail("Erreur inattendue lors du test : " + e.getMessage());
+	        throw e;
+	    }
+	}
+	*/
+	@Test
+	public void MedaillesParis24() throws IOException, InterruptedException {
+	    // Initialisation du test dans le rapport
+	    test = extent.createTest(
+	        "ParisOlympique24 Page Test",
+	        "redirection vers la page Olympique Paris 2024 et verifier la section des medailles"
+	    );
+
+	    try {
+	        // Navigation vers l'URL de base
+	        String baseUrl = ConfigManager.getProperty("baseUrl2");
+	        driver.get(baseUrl);
+	        test.info("Navigué vers l'URL de base : " + baseUrl);
+
+	        // Initialisation et configuration de la page des Jeux Olympiques
+	     /*   DPage = new JOlympiquesPage(driver);
+	        boolean dashboardConfigured = DPage.setupdashbord();
+
+	        if (dashboardConfigured) {
+	            test.pass("Configuration de la page des Jeux Olympiques réussie.");
+	        } else {
+	            test.fail("Échec de la configuration de la page des Jeux Olympiques.");
+	            Assert.fail("Échec de la configuration de la page des Jeux Olympiques.");
+	        }*/
+
+	    } catch (Exception e) {
+	        test.fail("Erreur inattendue lors du test : " + e.getMessage());
+	        throw e;
+	    }
+	}
+}

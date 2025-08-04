@@ -1,0 +1,57 @@
+package Test;
+
+import java.io.IOException;
+
+import org.testng.Assert;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+
+import Pages.BilletteriePage;
+import Pages.JOly_Paris2024_Page;
+import Pages.JOlympiquesPage;
+import Pages.loginPage;
+import Utils.BaseTest;
+import Utils.ConfigManager;
+
+@Listeners(Utils.TestListener.class)
+
+public class JOlympiquesParis2024 extends BaseTest {
+	
+	private JOlympiquesPage DPage;
+	private BilletteriePage Bpage;
+	JOly_Paris2024_Page ParisOly;
+	private loginPage login;
+	
+	@Test
+	public void ValidloginTest() throws IOException, InterruptedException {
+		test = extent.createTest("Valide Login Test", "Vérification de la connexion avec un utilisateur valide.");
+		try {
+			driver.get(ConfigManager.getProperty("baseUrl1"));
+			test.info("Navigué vers l'URL de base : " + ConfigManager.getProperty("baseUrl1"));
+
+			DPage = new JOlympiquesPage(driver);
+			boolean result = DPage.setupdashbord();
+
+			if (result) {
+				test.pass("Configuration de la Page de Connexion réussie.");
+			} else {
+				test.fail("Échec de la configuration de la page de connexion.");
+				Assert.fail("Échec de la configuration de la page de connexion.");
+			}
+
+			login = new loginPage(driver);
+
+			String xmlFilePath = "C:/Users/Ben Ali Nader/Desktop/Cucumber-Selenium-Java/JeuxOlympiques/src/test/resources/credentials.xml";
+
+			login.ConnexionValide(xmlFilePath);
+			test.pass("Connexion réussie avec un utilisateur valide.");
+
+			//login.scrollPage();
+			test.pass("défilement fluide et ralenti sur toute la page a été implémenté avec succès.");
+		} catch (Exception e) {
+			test.fail("Erreur dans le test de la page de connexion : " + e.getMessage());
+			throw e;
+		}
+	
+
+}

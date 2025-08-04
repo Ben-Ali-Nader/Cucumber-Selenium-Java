@@ -1,0 +1,96 @@
+package Test;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+
+import Pages.HomePage;
+import Pages.LoginPage;
+import Pages.ProductPage;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import utility.ConfigManager;
+import utils.ExtentManager;
+
+public class TestAjoutPanier {
+
+	WebDriver driver;
+	ExtentTest test;
+	ExtentReports extent;
+	ProductPage produits;
+	LoginPage login;
+	
+	
+	public TestAjoutPanier(WebDriver driver) {
+        // Initialisation du WebDriver ou autres variables nécessaires
+        this.driver = driver;
+    }
+
+    // Vous pouvez également définir un constructeur par défaut si nécessaire
+    public TestAjoutPanier() {
+        // Initialisation par défaut
+    }
+	
+
+
+	@BeforeTest
+	public void setupReporter() {
+		WebDriverManager.chromedriver().setup();
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		
+
+		extent = ExtentManager.getInstance();
+
+	}
+
+	@AfterTest
+	public void tearDownReporter() {
+		if (driver != null) {
+	driver.quit();
+		}
+		if (extent != null) {
+			extent.flush(); // Finaliser le rapport
+		}
+	}
+
+
+
+	@Test
+	public void ajoutPanier() throws InterruptedException {
+
+		test = extent.createTest("Test d'ajout d'un produit au panier", "Vérifie l'ajout d'un produit au panier.");
+		produits = new ProductPage(driver);
+
+		test.info("user navigue vers le site amazon fr");
+		driver.get(ConfigManager.getProperty("baseUrl"));
+		test.pass("user et sur site dashbord amazon fr");
+
+		produits.setupDashbordEtRechercheProduits();
+		test.pass("user lance la recherche de produit");
+		Thread.sleep(2000);
+		produits.ajoutProduitDansLePanier();
+		test.pass("user ajout un produit dans le penier");
+		produits.assertionPanier();
+		test.pass("user verifie que le produit est ajouter avec succes dans le panier");
+
+		/*login = new LoginPage(driver);
+		String username = ConfigManager.getProperty("username");
+		String password = ConfigManager.getProperty("password");
+
+		login.enter_username_continuer(username);
+		login.enter_password_signInSubmit(password);*/
+
+
+
+
+
+
+	}
+
+
+}

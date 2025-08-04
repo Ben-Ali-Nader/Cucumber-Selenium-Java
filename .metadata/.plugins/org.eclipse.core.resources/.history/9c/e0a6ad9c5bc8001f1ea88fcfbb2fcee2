@@ -1,0 +1,47 @@
+package Test;
+
+import java.io.IOException;
+import org.testng.Assert;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+import Pages.BilletteriePage;
+import Pages.DashboardPage;
+import Pages.loginPage;
+import Utils.BaseTest;
+import Utils.ConfigManager;
+
+@Listeners(Utils.TestListener.class)
+public class JOlympiquesParis2024 extends BaseTest {
+
+    private DashboardPage DPage;
+    private BilletteriePage Bpage;
+    private loginPage login;
+
+ 
+    @Test
+    public void ValidloginTest() throws IOException, InterruptedException {
+        test = extent.createTest("Valide Login Test", "Vérification la conenxion avec user valide.");
+        try {
+            driver.get(ConfigManager.getProperty("baseUrl1"));
+            test.info("Navigué vers l'URL de base : " + ConfigManager.getProperty("baseUrl1"));
+
+            DPage = new DashboardPage(driver);
+            boolean result = DPage.setupdashbord();
+            if (result) {
+                test.pass("Configuration du la Page de Conenxion Configurer avec succes");
+            } else {
+                test.fail("Échec de la configuration du tableau de bord.");
+                Assert.fail("Échec de la configuration du tableau de bord.");
+            }
+
+            login = new loginPage(driver);
+
+            login.ConnexionValide();
+        } catch (Exception e) {
+            test.fail("Erreur dans le test de la page de connexion : " + e.getMessage());
+            throw e;
+        }
+    }
+    
+    
+}

@@ -1,0 +1,90 @@
+package Pages;
+
+import java.io.IOException;
+import java.time.Duration;
+
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+
+import Utils.BaseTest;
+
+public class JOly_Paris2024_Page {
+
+
+	private WebDriver driver;
+	private WebDriverWait wait;
+	JavascriptExecutor js;
+
+
+	@FindBy(id="menu-olympic-games")
+	WebElement MenuOlympicGames;
+	
+	@FindBy(xpath="//*[@class=\"EditionsCarousel-styles__EditionTitle-sc-4c69da2b-4 dzehSP\" and contains (text(),'Paris 2024')]")
+	WebElement paris2024;
+
+	public JOly_Paris2024_Page(WebDriver driver) {
+		this.driver = driver;
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+	}
+
+
+	public void verifyElementVisibility(WebElement element, String elementName) throws IOException {
+		try {
+			if (element.isDisplayed()) {
+				BaseTest.test.pass("Le Message '" + elementName + "' est visible.");
+			} else {
+				BaseTest.test.fail("Le Message'" + elementName + "' n'est pas visible.");
+			}
+		} catch (Exception e) {
+			BaseTest.test.fail("Erreur lors de la vérification de l'élément '" + elementName + "'.",
+					MediaEntityBuilder.createScreenCaptureFromPath(BaseTest.takeScreenshot(elementName + "_visibility_error")).build());
+		}
+	}
+
+
+	public void EnterPagePariOlympic24() throws IOException, InterruptedException {
+		waitForPageToLoad();
+	    // Créer une instance d'Actions pour effectuer des actions de survol
+	    Actions actions = new Actions(driver);
+	    wait.until(ExpectedConditions.visibilityOf(MenuOlympicGames));
+	    verifyElementVisibility(MenuOlympicGames,"lelement menu olympique est visible est pret a etre hovrer");
+	    // Déplacer la souris vers le menu "Jeux Olympiques"
+	    actions.moveToElement(MenuOlympicGames).perform();
+
+	    // Attendre un peu plus longtemps (délai plus long si nécessaire)
+	    Thread.sleep(3000);  // Augmenter le délai d'attente pour donner plus de temps au sous-menu de s'afficher
+	    
+	    wait.until(ExpectedConditions.visibilityOf(paris2024));
+
+	    // Vérification que l'élément est bien visible avant de cliquer
+	    if (paris2024.isDisplayed()) {
+	        System.out.println("Le bouton Paris 2024 est visible");
+	        paris2024.click();  // Cliquer sur le bouton Paris 2024
+	    } else {
+	        System.out.println("Le bouton Paris 2024 n'est pas visible");
+	    }
+
+	    // Optionnel : Forcer l'affichage du sous-menu avec JavaScript si nécessaire
+	   // js = (JavascriptExecutor) driver;
+	  //  js.executeScript("arguments[0].style.display = 'block';", MenuOlympicGames);
+	}
+	public void waitForPageToLoad() {
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // Temps d'attente maximum de 30 secondes
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
+
+	    // Vérifier que le document est complètement chargé
+	    wait.until(webDriver -> js.executeScript("return document.readyState").toString().equals("complete"));
+	}
+
+
+}

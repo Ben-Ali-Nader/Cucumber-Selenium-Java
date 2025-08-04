@@ -1,0 +1,100 @@
+package Pages;
+
+import java.io.IOException;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+
+import Utils.BaseTest;
+
+public class DashboardPage {
+
+	WebDriver driver;
+
+	@FindBy(id="onetrust-accept-btn-handler")
+	WebElement tout_accepter;
+
+	@FindBy(xpath="//*[@alt=\"Olympic Channel\"]")
+	public
+	WebElement Logo;
+
+	@FindBy(xpath="//*[@type=\"button\"]")
+	public
+	WebElement btn_Menu;
+
+	@FindBy(xpath="//*[@class=\"OcsTextstyles__StyledText-sc-1a1i41u-0 kNulKN UserProfileButton-styles__UserProfileButtonLabel-sc-ad362435-0 iLtJqY user-profile-label text--sm-text\"]")
+	public
+	WebElement btn_SeConnecter ;
+
+	@FindBy(xpath="//*[@class=\"OcsTextstyles__StyledText-sc-1a1i41u-0 kqsGAY text--sm-text\"]")
+	public
+	WebElement btn_language ;
+
+	@FindBy(xpath="//*[@class=\"d-none d-lg-block\" and contains(text(),'Billetterie')]")
+	public
+	WebElement btn_Billetterie;
+
+	@FindBy(xpath="//*[@class=\"my-channel-signup__button\"]")
+	public
+	WebElement btn_signup;
+
+
+	public DashboardPage(WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+	}
+
+	public boolean setupdashbord() {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			wait.until(ExpectedConditions.visibilityOf(tout_accepter));
+			if (tout_accepter.isDisplayed()) {
+				tout_accepter.click();
+				System.out.println("Les cookies du CIO et Les cookies tiers sont tout acceptés.");
+				return true;
+			} else {
+				System.out.println("Les cookies du CIO et les cookies tiers ne sont pas visibles.");
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println("Erreur lors de la configuration du tableau de bord : " + e.getMessage());
+			return false;
+		}
+	}
+	
+	
+	public void verifyElement () throws IOException {
+		
+		verifyElementVisibility(Logo, "Logo");
+		verifyElementVisibility(btn_Menu, "Menu");
+		verifyElementVisibility(btn_SeConnecter, "Se Connecter");
+		verifyElementVisibility(btn_language, "Langue");
+		verifyElementVisibility(btn_Billetterie, "Billetterie");
+		verifyElementVisibility(btn_signup, "S'inscrire");
+	}
+
+	public void verifyElementVisibility(WebElement element, String elementName) throws IOException {
+		try {
+			if (element.isDisplayed()) {
+				BaseTest.test.pass("L'élément '" + elementName + "' est visible.");
+			} else {
+				BaseTest.test.fail("L'élément '" + elementName + "' n'est pas visible.");
+			}
+		} catch (Exception e) {
+			BaseTest.test.fail("Erreur lors de la vérification de l'élément '" + elementName + "'.",
+					MediaEntityBuilder.createScreenCaptureFromPath(BaseTest.takeScreenshot(elementName + "_visibility_error")).build());
+		}
+	}
+
+}
+	

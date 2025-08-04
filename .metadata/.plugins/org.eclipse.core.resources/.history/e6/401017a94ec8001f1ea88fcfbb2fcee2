@@ -1,0 +1,105 @@
+package Pages;
+
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class BilletteriePage {
+	WebDriver driver;
+
+	@FindBy(xpath="//*[@class=\"d-none d-lg-block\" and contains(text(),'Billetterie')]")
+	WebElement btn_Billetterie;
+
+	@FindBy(id="onetrust-accept-btn-handler")
+	WebElement tout_accepter;
+
+	@FindBy(xpath="//*[@class=\"cmpboxbtn cmpboxbtnyes cmptxt_btn_yes\"]")
+	WebElement acceptAll;
+
+	public BilletteriePage (WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+	}
+
+	public boolean setupdashbordBilleterie() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		try {
+			
+			wait.until(ExpectedConditions.visibilityOf(tout_accepter));
+			if (tout_accepter.isDisplayed()) {
+				tout_accepter.click();
+				System.out.println("Les cookies du CIO et Les cookies tiers sont tout acceptés.");
+				return true;
+			} else {
+				System.out.println("Les cookies du CIO et les cookies tiers ne sont pas visibles.");
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println("Erreur lors de la configuration du tableau de bord : " + e.getMessage());
+			return false;
+		}
+
+		
+		try {
+			
+			wait.until(ExpectedConditions.elementToBeClickable(btn_Billetterie));
+
+			if (btn_Billetterie.isDisplayed()) {
+				btn_Billetterie.click();
+				
+				return true;
+			}
+		} catch (Exception e) {
+
+			System.out.println("erreur"+e);
+
+		}
+		
+try {
+			
+			wait.until(ExpectedConditions.elementToBeClickable(acceptAll));
+
+			if (acceptAll.isDisplayed()) {
+				acceptAll.click();
+				
+				return true;
+			}
+		} catch (Exception e) {
+
+			System.out.println("erreur"+e);
+
+		}
+	}
+
+	public void EnterBilletteriePage () {
+		btn_Billetterie.click();
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

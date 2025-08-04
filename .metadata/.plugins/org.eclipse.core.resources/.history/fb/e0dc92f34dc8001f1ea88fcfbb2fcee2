@@ -1,0 +1,45 @@
+package Pages;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+
+public class BilletteriePage {
+	WebDriver driver;
+	
+	@FindBy(xpath="//*[@class=\"d-none d-lg-block\" and contains(text(),'Billetterie')]")
+	WebElement btn_Billetterie;
+	
+	public BilletteriePage (WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+	}
+	
+	public void EnterBilletteriePage () {
+		btn_Billetterie.click();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

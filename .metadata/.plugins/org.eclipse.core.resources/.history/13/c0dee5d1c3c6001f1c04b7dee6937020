@@ -1,0 +1,38 @@
+package snippet;
+
+public class Snippet {
+	# URL de base
+	baseUrl=https://www.amazon.fr
+	baseUrl1=https://www.amazon.fr/ap/signin?openid.pape.max_auth_age=0&openid.return_to=https%3A%2F%2Fwww.amazon.fr%2F%3Fref_%3Dnav_custrec_signin&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.assoc_handle=frflex&openid.mode=checkid_setup&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0
+	
+	# Navigateur
+	browser=chrome
+	
+	# Timeout en secondes
+	implicitWait=10
+	pageLoadTimeout=20
+	
+	# Identifiants
+	username=nadbenali.it@gmail.com
+	password=23666444nN!
+	
+	username1=nadbenaliit@gmail.com
+	password1=123456789n
+	
+	paysResidance=Italie
+	nom_Prenom= Nader Ben Ali
+	adreese_1 = Avenue du Général Leclerc
+	adreese_2 = 
+	code_Postal =75014
+	ville_residance=paris 
+	num_phone=3383238256
+	
+	paysResidance=Italie
+	nom_Prenom_f= Nader Ben Ali
+	adreese_1_f = Avenue sbfjdkl
+	adreese_2_f= 
+	code_Postal_f =4562
+	ville_residance_f=mazara del vallo 
+	num_phone_f=3383238256
+}
+

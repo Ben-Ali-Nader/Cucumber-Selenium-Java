@@ -1,0 +1,82 @@
+package Pages;
+
+import java.io.IOException;
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+
+import Utils.BaseTest;
+
+public class loginPage {
+
+	private WebDriver driver;
+	private WebDriverWait wait;
+
+
+	@FindBy(xpath="//*[@class=\"OcsTextstyles__StyledText-sc-1a1i41u-0 kNulKN UserProfileButton-styles__UserProfileButtonLabel-sc-ad362435-0 iLtJqY user-profile-label text--sm-text\"]")
+	WebElement btn_SeConnecter ;
+
+	@FindBy(xpath="//*[@title=\"facebook\"]")
+	WebElement log_facebook;
+
+	@FindBy(xpath="//*[@title=\"apple\"]")
+	WebElement log_apple;
+
+	@FindBy(xpath="//*[@title=\"google\"]")
+	WebElement log_google;
+
+	@FindBy(id="email")
+	WebElement champ_email;
+
+	@FindBy(xpath="//*[@type=\"submit\"]")
+	WebElement submit;
+
+	@FindBy(xpath="//*[@class=\"sc-iCoHzw PiJkc\"]")
+	WebElement MotDePassoublié;
+
+	public loginPage(WebDriver driver) {
+		this.driver = driver;
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+	}
+
+	public void SeConnecter() {
+		if (btn_SeConnecter.isDisplayed()) {
+			btn_SeConnecter.click();
+			System.out.println("vous ete rediger ves la page de conenxion ");
+		}
+	}
+
+	public void verifyElementVisibility(WebElement element, String elementName) throws IOException {
+		try {
+			if (element.isDisplayed()) {
+				BaseTest.test.pass("L'élément '" + elementName + "' est visible.");
+			} else {
+				BaseTest.test.fail("L'élément '" + elementName + "' n'est pas visible.");
+			}
+		} catch (Exception e) {
+			BaseTest.test.fail("Erreur lors de la vérification de l'élément '" + elementName + "'.",
+					MediaEntityBuilder.createScreenCaptureFromPath(BaseTest.takeScreenshot(elementName + "_visibility_error")).build());
+		}
+	}
+
+	public void verifyElement () throws IOException {
+
+		verifyElementVisibility(log_google, "google");
+		verifyElementVisibility(log_facebook, "facebook");
+		verifyElementVisibility(log_apple, "apple");
+		verifyElementVisibility(champ_email, "champ email");
+		verifyElementVisibility(submit, "submit");
+		verifyElementVisibility(MotDePassoublié, "Mot D ePass oublié");
+	}
+
+
+
+}

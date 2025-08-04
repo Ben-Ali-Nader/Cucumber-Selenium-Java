@@ -1,0 +1,20 @@
+Feature: test fonctionality authetification
+
+  Scenario: tchek home page
+    Given browser is open
+    And user is in google searsh
+    When user enter a text ins search box
+    And and click enter
+    Then user is navigated to page search
+    And user scroll vers le site Myshop and click enter
+    Then user is navigated to home page
+
+  Scenario Outline: Sign up with email address
+    Given user clicks on the Sign Up button
+    When user enters <email> 
+    And user click create acount
+    Then user receivera la formulaire inscription
+
+    Examples: 
+      | email                  |
+      | nadbenali.it@gmail.com |

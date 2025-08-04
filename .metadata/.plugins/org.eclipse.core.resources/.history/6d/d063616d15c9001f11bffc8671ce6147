@@ -1,0 +1,49 @@
+package Test;
+
+import java.io.IOException;
+import org.testng.Assert;
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
+import Pages.BilletteriePage;
+import Pages.DashboardPage;
+import Pages.loginPage;
+import Utils.BaseTest;
+import Utils.ConfigManager;
+
+@Listeners(Utils.TestListener.class)
+public class Connex_valide_invalide extends BaseTest {
+
+    private DashboardPage DPage;
+    private BilletteriePage Bpage;
+    private loginPage login;
+
+
+    @Test
+    public void ValidloginTest() throws IOException, InterruptedException {
+        test = extent.createTest("Valide Login Test", "Vérification de la connexion avec un utilisateur valide.");
+        try {
+            driver.get(ConfigManager.getProperty("baseUrl1"));
+            test.info("Navigué vers l'URL de base : " + ConfigManager.getProperty("baseUrl1"));
+
+            DPage = new DashboardPage(driver);
+            boolean result = DPage.setupdashbord();
+            if (result) {
+                test.pass("Configuration de la Page de Connexion réussie.");
+            } else {
+                test.fail("Échec de la configuration de la page de connexion.");
+                Assert.fail("Échec de la configuration de la page de connexion.");
+            }
+
+            login = new loginPage(driver);
+
+            // Chemin vers le fichier XML contenant les données
+            String xmlFilePath = "path/to/credentials.xml";
+            login.ConnexionValide(xmlFilePath);
+        } catch (Exception e) {
+            test.fail("Erreur dans le test de la page de connexion : " + e.getMessage());
+            throw e;
+        }
+    }
+    
+    
+}

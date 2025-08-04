@@ -1,0 +1,27 @@
+package Utils;
+
+import java.io.File;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
+
+public class CredentialsLoader {
+	
+	public static String getEmailFromXml(String filePath) {
+        try {
+            File file = new File(filePath);
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(file);
+
+            // Extraire l'email
+            return doc.getElementsByTagName("email").item(0).getTextContent();
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la lecture du fichier XML : " + e.getMessage());
+            return null;
+        }
+    }
+
+}

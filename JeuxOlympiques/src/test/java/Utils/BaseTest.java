@@ -1,0 +1,73 @@
+package Utils;
+
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+
+
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+
+public class BaseTest {
+
+	protected static WebDriver driver;
+	protected ExtentReports extent;
+	public static ExtentTest test;
+	
+	
+	
+	@BeforeMethod
+	public void setUp() throws InterruptedException {
+
+		extent = ExtentManager.getInstance();
+
+
+		WebDriverManager.chromedriver().setup();
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("user-agent=Mozilla/5.0");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+
+	}
+
+	@AfterMethod
+	public void tearDown() throws InterruptedException {
+		if (driver != null) {
+			driver.quit();
+		}
+		if (extent != null) {
+			extent.flush();
+		}
+	}
+	
+	
+	
+	public static String takeScreenshot(String testName) {
+	    File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+	    String dest = System.getProperty("user.dir") + "/screenshots/" + testName + ".png";
+	    File destination = new File(dest);
+	    try {
+	        FileUtils.copyFile(src, destination);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    return dest;
+	}
+}

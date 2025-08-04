@@ -1,0 +1,97 @@
+package Pages;
+
+import java.io.IOException;
+import java.time.Duration;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.aventstack.extentreports.MediaEntityBuilder;
+
+import Utils.BaseTest;
+
+public class JOly_Paris2024_Page {
+
+
+	private WebDriver driver;
+	private WebDriverWait wait;
+	JavascriptExecutor js;
+
+
+	@FindBy(id="menu-olympic-games")
+	WebElement MenuOlympicGames;
+
+	@FindBy(id="9f3163c0-1954-42a3-baec-48b3726ac7eb")
+	WebElement paris2024;
+
+	@FindBy(xpath="//*[@data-cy=\"topbar-button\" and contains(text(),'Médailles')]")
+	WebElement medailles;
+
+	@FindBy(id="p2024-languageButton-header")
+	WebElement langue;
+
+	@FindBy(xpath="//*[@data-cy=\"topbar-button\" and contains(text(),'Meilleurs moments')]")
+	WebElement MeilleursMoments;
+
+	@FindBy(id="p2024-user-header")
+	WebElement userConnex;
+
+	public JOly_Paris2024_Page(WebDriver driver) {
+		this.driver = driver;
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+	}
+
+
+	public void verifyElementVisibility(WebElement element, String elementName) throws IOException {
+		try {
+			if (element.isDisplayed()) {
+				BaseTest.test.pass("Le Message '" + elementName + "' est visible.");
+			} else {
+				BaseTest.test.fail("Le Message'" + elementName + "' n'est pas visible.");
+			}
+		} catch (Exception e) {
+			BaseTest.test.fail("Erreur lors de la vérification de l'élément '" + elementName + "'.",
+					MediaEntityBuilder.createScreenCaptureFromPath(BaseTest.takeScreenshot(elementName + "_visibility_error")).build());
+		}
+	}
+
+	public void waitForPageToLoad() {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // Temps d'attente maximum de 30 secondes
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		wait.until(webDriver -> js.executeScript("return document.readyState").toString().equals("complete"));
+	}
+	
+	
+	public void paris24page() throws IOException {
+
+		try {
+			verifyElementVisibility(paris2024, "le bouton href paris 2024 est visible est pret a etre clicable");
+			
+			if(paris2024.isDisplayed()) {
+				
+				paris2024.click();
+				verifyElementVisibility(medailles, "le bouton href paris 2024 est visible est pret a etre clicable");
+				verifyElementVisibility(langue, "le bouton href paris 2024 est visible est pret a etre clicable");
+				verifyElementVisibility(MeilleursMoments, "le bouton href paris 2024 est visible est pret a etre clicable");
+				verifyElementVisibility(userConnex, "le bouton href paris 2024 est visible est pret a etre clicable");
+
+			}
+		}catch (Exception e) {
+			BaseTest.test.fail("Erreur lors de la vérification des éléments '"+e);
+		}
+	}
+
+
+
+
+}

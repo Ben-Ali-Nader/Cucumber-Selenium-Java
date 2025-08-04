@@ -1,0 +1,156 @@
+package Pages;
+
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class BilletteriePage {
+    private WebDriver driver;
+    private WebDriverWait wait;
+
+    // Locators
+    @FindBy(xpath = "//*[contains(text(),'Billetterie')]")
+    private WebElement btn_Billetterie;
+
+    @FindBy(id = "onetrust-accept-btn-handler")
+    private WebElement tout_accepter;
+
+    @FindBy(xpath = "//*[@class='cmpboxbtn cmpboxbtnyes cmptxt_btn_yes']")
+    private WebElement acceptAll;
+    
+    @FindBy(xpath="//*[@data-action=\"Banner\"]")
+    WebElement SingUp;
+    
+    @FindBy(xpath="//*[@class=\"p-headline p-font no-margin-top u-font-weight-700\"]")
+    WebElement ImportantInformation;
+    
+    @FindBy(xpath="//*[@class=\"p-benefits-description col-md-8 no-padding\"]")
+    WebElement ImportantInformationDescription ;
+
+    // Constructor
+    public BilletteriePage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+    }
+
+    // Methods
+
+    /**
+     * Configures the dashboard by accepting cookies and interacting with the "Billetterie" button.
+     *
+     * @return true if successful, false otherwise.
+     */
+    public boolean setupDashboardBilletterie() {
+        try {
+            // Handle the "Tout accepter" button for cookies
+            if (isElementVisible(tout_accepter)) {
+                tout_accepter.click();
+                System.out.println("Les cookies du CIO et les cookies tiers sont acceptés.");
+            } else {
+                System.out.println("Le bouton 'Tout accepter' n'est pas visible.");
+            }
+
+            // Handle the "Billetterie" button
+            if (isElementClickable(btn_Billetterie)) {
+                btn_Billetterie.click();
+                System.out.println("Bouton 'Billetterie' cliqué avec succès.");
+                return true;
+            } else {
+                System.out.println("Le bouton 'Billetterie' n'est pas cliquable.");
+                return false;
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de la configuration du tableau de bord : " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Clicks on the "Billetterie" button directly.
+     */
+    public void enterBilletteriePage() {
+        try {
+            if (isElementClickable(acceptAll)) {
+            	acceptAll.click();
+                System.out.println("The cookies on this site are All acepted");
+            } else {
+                System.out.println("The cookies on this site are not acepted");
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de l'entrée dans la page Billetterie : " + e.getMessage());
+        }
+    }
+    
+    public void AcceptCookiesBilletereie() {
+        try {
+            if (isElementClickable(btn_Billetterie)) {
+                btn_Billetterie.click();
+                System.out.println("Navigué vers la page Billetterie.");
+            } else {
+                System.out.println("Le bouton 'Billetterie' n'est pas cliquable.");
+            }
+        } catch (Exception e) {
+            System.out.println("Erreur lors de l'entrée dans la page Billetterie : " + e.getMessage());
+        }
+    }
+    
+    public void ImportantOfEventsBilleterie() {
+        try {
+            // Vérifie si les deux éléments sont visibles avant de continuer
+            if (isElementVisible(ImportantInformation) && isElementVisible(ImportantInformationDescription)) {
+                // Récupère le texte des éléments
+                String info = ImportantInformation.getText();
+                String descrip = ImportantInformationDescription.getText();
+                
+                // Affiche les informations dans la console
+                System.out.println("Informations importantes : " + info);
+                System.out.println("Description : " + descrip);
+            } else {
+                System.out.println("Pas d'informations à afficher à propos des billetteries.");
+            }
+        } catch (Exception e) {
+            // Gestion des exceptions avec un message d'erreur clair
+            System.out.println("Erreur lors de l'accès aux informations importantes de la page Billetterie : " + e.getMessage());
+        }
+    }
+
+
+    /**
+     * Checks if an element is visible.
+     *
+     * @param element WebElement to check.
+     * @return true if visible, false otherwise.
+     */
+    private boolean isElementVisible(WebElement element) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(element));
+            return element.isDisplayed();
+        } catch (Exception e) {
+            System.out.println("Élément non visible : " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Checks if an element is clickable.
+     *
+     * @param element WebElement to check.
+     * @return true if clickable, false otherwise.
+     */
+    private boolean isElementClickable(WebElement element) {
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            return true;
+        } catch (Exception e) {
+            System.out.println("Élément non cliquable : " + e.getMessage());
+            return false;
+        }
+    }
+}

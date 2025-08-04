@@ -1,0 +1,36 @@
+package Pages;
+
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class DashboardPage {
+	
+	WebDriver driver;
+	
+	@FindBy(id="onetrust-accept-btn-handler")
+	WebElement tout_accepter;
+	
+	public DashboardPage(WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
+	}
+	
+	public void setupdashbord() {
+		
+		 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		 wait.until(ExpectedConditions.visibilityOf(tout_accepter));
+		if(tout_accepter.isDisplayed()) {
+			tout_accepter.click();
+        System.out.println("Les cookies du CIO et Les cookies tiers sont tout acceptées");
+		}else
+		System.out.println("Les cookies du CIO et les cookies tiers ne sont pas visible encore");
+	}
+
+}
